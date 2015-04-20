@@ -11,9 +11,9 @@ from django.contrib import auth #Check for correctness
 # You'll notice that the Model class provided by Django is
 # elided (it doesn't have the attributes or methods listed.
 
-class User(models.Model):
+class User(auth.models.User):
 
-	def __init__(self, username, first, last, password):
+	"""def __init__(self, username, first, last, password):
 		self.first_name = first
 		self.last_name = last
 		self.password = password
@@ -25,9 +25,9 @@ class User(models.Model):
 	last_name = models.CharField(max_length = 20)
 	password =models.CharField(max_length = 10)
 	username = models.CharField(max_length = 10)
-	is_staff = models.BooleanField()
-	is_active = models.BooleanField()
-
+	is_staff = models.BooleanField(default= False)
+	is_active = models.BooleanField(default = True)
+	"""
 	def Name(self):
 		return self.first_name + " " + self.last_name
 	
@@ -36,12 +36,18 @@ class User(models.Model):
 
 class Cadet(User):
 	
+	
 	def __init__(self, username, first, last, password, xnumber, company, sport):
 		User.__init__(self, username, first, last, password)
 		self.xNumber = xnumber
 		self.company = company
 		self.sport = sport
 		self.is_staff = False
+		
+	xNumber = models.CharField(max_length = 6,default = 'x12345')
+	company = models.CharField(max_length = 2)
+	sport = models.CharField(max_length = 30)
+	
 
 #DateTimeField('date published')
 
@@ -59,9 +65,13 @@ class Meal(models.Model):
 	)
 	
 	def __init__(self, date, meal_type, meal_description):
-		self.date = models.DateField('Meal Date', default = date)
-		self.meal_type = models.CharField(max_length = 2, choices = meal_type_choices, default = BREAKFAST)
-		self.meal_description = models.CharField(max_length=255, default = meal_description)
+		self.date = date
+		self.meal_type = meal_type
+		self.meal_description = meal_description
+	
+	date = models.DateField('Meal Date')
+	meal_type = models.CharField(max_length = 2, choices = meal_type_choices)
+	meal_description = models.CharField(max_length=255)
 	
 	def __unicode__(self):
 		return self.meal_date + " " + self.meal_type + " " + self.meal_description
