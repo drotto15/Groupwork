@@ -3,7 +3,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
-from django.contrib import auth #Check for correctness
+from django.contrib.auth.models import User #Check for correctness
 
 
 # You can find an example class diagram for the Model at
@@ -11,7 +11,9 @@ from django.contrib import auth #Check for correctness
 # You'll notice that the Model class provided by Django is
 # elided (it doesn't have the attributes or methods listed.
 
-class User(auth.models.User):
+class User(models.Model):
+	
+	user = models.OneToOneField(User)
 
 	"""def __init__(self, username, first, last, password):
 		self.first_name = first
@@ -29,10 +31,10 @@ class User(auth.models.User):
 	is_active = models.BooleanField(default = True)
 	"""
 	def Name(self):
-		return self.first_name + " " + self.last_name
+		return self.user.first_name + " " + self.last_name
 	
 	def __unicode__(self):
-		return self.username
+		return self.user.username
 
 class Cadet(User):
 	
