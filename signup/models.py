@@ -11,7 +11,7 @@ from django.contrib.auth.models import User #Check for correctness
 # You'll notice that the Model class provided by Django is
 # elided (it doesn't have the attributes or methods listed.
 
-class User(models.Model):
+class Customer(models.Model):
 	
 	user = models.OneToOneField(User)
 
@@ -31,7 +31,7 @@ class User(models.Model):
 	is_active = models.BooleanField(default = True)
 	"""
 	def Name(self):
-		return self.user.first_name + " " + self.last_name
+		return self.user.first_name + " " + self.user.last_name
 	
 	def __unicode__(self):
 		return self.user.username
